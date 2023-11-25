@@ -37,8 +37,7 @@ class RDTSender:
         :param data: one and only one character, for example data = 'A'
         :return: the ASCII code of the character, for example ASCII('A') = 65
         """
-        # TODO provide your own implementation
-        checksum = None  # you need to change that
+        checksum = ord(data)
         return checksum
 
     @staticmethod
@@ -60,8 +59,10 @@ class RDTSender:
         :param reply: a python dictionary represent a reply sent by the receiver
         :return: True -> if the reply is corrupted | False ->  if the reply is NOT corrupted
         """
-        # TODO provide your own implementation
-        pass
+        if reply['checksum'] == reply['ack']:
+            return False
+        else:
+            return True
 
     @staticmethod
     def is_expected_seq(reply, exp_seq):
@@ -70,8 +71,10 @@ class RDTSender:
         :param exp_seq: the sender expected sequence number '0' or '1' represented as a character
         :return: True -> if ack in the reply match the   expected sequence number otherwise False
         """
-        # TODO provide your own implementation
-        pass
+        if reply['ack'] == exp_seq:
+            return True
+        else:
+            return False
 
     @staticmethod
     def make_pkt(seq, data, checksum):
@@ -96,7 +99,6 @@ class RDTSender:
 
         # for every character in the buffer
         for data in process_buffer:
-
             checksum = RDTSender.get_checksum(data)
             pkt = RDTSender.make_pkt(self.sequence, data, checksum)
             reply = self.net_srv.udt_send(pkt)

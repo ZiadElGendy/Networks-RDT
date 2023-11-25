@@ -1,0 +1,13 @@
+Sequence Number:
+
+Sender:
+Seq variable is 0
+Sends 0
+Excepts Ack 0
+Changes to 1
+
+Reciever:
+Seq variable is 0
+Expects Data 0
+Sends Ack 0
+Changes to 1
