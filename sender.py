@@ -59,7 +59,7 @@ class RDTSender:
         :param reply: a python dictionary represent a reply sent by the receiver
         :return: True -> if the reply is corrupted | False ->  if the reply is NOT corrupted
         """
-        if reply['checksum'] == reply['ack']:
+        if reply['checksum'] == ord(reply['ack']):
             return False
         else:
             return True

@@ -78,5 +78,5 @@ class RDTReceiver:
         # deliver the data to the process in the application layer
         ReceiverProcess.deliver_data(rcv_pkt['data'])
 
-        reply_pkt = RDTReceiver.make_reply_pkt(ack, ack)
+        reply_pkt = RDTReceiver.make_reply_pkt(ack, ord(ack))
         return reply_pkt
