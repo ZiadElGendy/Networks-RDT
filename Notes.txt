@@ -11,3 +11,5 @@ Seq variable is 0
 Expects Data 0
 Sends Ack 0
 Changes to 1
+
+If reciever recieves corrupted data, it sends acknowledgment with seq opposite of expected seq
