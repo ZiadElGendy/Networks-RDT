@@ -1,4 +1,6 @@
 import colors
+import time
+import multiprocessing.pool
 class SenderProcess:
     """ Represent the sender process in the application layer  """
 
@@ -108,20 +110,29 @@ class RDTSender:
             print(colors.cgreen + f'Sender is sending: {pkt}' + colors.cend)
 
             pkt_copy = self.clone_packet(pkt)
-            reply = self.net_srv.udt_send(pkt_copy)
-            print(colors.cgreen + f'Sender expected seq number: {self.sequence}' + colors.cend)
-            print(colors.cgreen + f'Sender received: {reply}' + colors.cend)
 
-            while self.is_corrupted(reply) or not self.is_expected_seq(reply, self.sequence):
-                print(colors.cgreen + f'Sender is resending: {pkt}' + colors.cend)
-                print(colors.cgreen + f'Sender expected seq number: {self.sequence}' + colors.cend)
-                pkt_copy = self.clone_packet(pkt)
-                reply = self.net_srv.udt_send(pkt_copy)
-                print(colors.cgreen + f'Sender received: {reply}' + colors.cend)
+            is_received=False
 
-            match self.sequence:
-                case '0': self.sequence = '1'
-                case '1': self.sequence = '0'
+            while(not is_received):
+                try:
+                    with multiprocessing.pool.ThreadPool() as pool:
+                        pkt_copy = self.clone_packet(pkt)
+                        reply= pool.apply_async(self.net_srv.udt_send,frame=pkt_copy).get(timeout=5)
+                except multiprocessing.TimeoutError:
+                    print(colors.cred +'timeout'+ colors.cend)
+                else:
+                    print(colors.cgreen + f'Sender expected seq number: {self.sequence}' + colors.cend)
+                    print(colors.cgreen + f'Sender received: {reply}' + colors.cend)
 
+                    if self.is_corrupted(reply) or not self.is_expected_seq(reply, self.sequence):
+                        print(colors.cgreen + f'Sender is resending: {pkt}' + colors.cend)
+                        
+                    else: 
+                        is_received= True
+                        match self.sequence:
+                            case '0': self.sequence = '1'
+                            case '1': self.sequence = '0'
+            
+       
         print(f'Sender Done!')
         return
