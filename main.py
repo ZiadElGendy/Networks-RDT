@@ -2,8 +2,10 @@ from network import NetworkLayer
 from receiver import ReceiverProcess
 from sender import SenderProcess, RDTSender
 import sys
+import os
 
 if __name__ == '__main__':
+    os.system('')
     args = dict([arg.split('=', maxsplit=1) for arg in sys.argv[1:]])
     print(args)
     msg = args['msg']

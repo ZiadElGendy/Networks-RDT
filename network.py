@@ -1,5 +1,6 @@
 import random
 import time
+import colors
 from receiver import RDTReceiver
 
 """

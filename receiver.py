@@ -1,3 +1,4 @@
+import colors
 class ReceiverProcess:
     """ Represent the receiver process in the application layer  """
     __buffer = list()
@@ -31,9 +32,10 @@ class RDTReceiver:
             :param packet: a python dictionary represent a packet received from the sender
             :return: True -> if the reply is corrupted | False ->  if the reply is NOT corrupted
         """
-        if packet['checksum'] == ord(packet['data']):
+        if packet['checksum'] == ord(str(packet['data'])):
             return False
         else:
+            print(colors.cred + 'Receiver: Incorrect checksum' + colors.cend)
             return True
 
     @staticmethod
@@ -46,6 +48,7 @@ class RDTReceiver:
         if rcv_pkt['sequence_number'] == exp_seq:
             return True
         else:
+            print(colors.cred + 'Receiver: Incorrect sequence number' + colors.cend)
             return False
 
     @staticmethod
@@ -66,17 +69,28 @@ class RDTReceiver:
         :param rcv_pkt: a packet delivered by the network layer 'udt_send()' to the receiver
         :return: the reply packet
         """
+        print(colors.cblue + f'Receiver expected seq number: {self.sequence}' + colors.cend)
+        print(colors.cblue + f'Receiver received: {rcv_pkt}' + colors.cend)
 
-        ack = rcv_pkt['sequence_number']
-        if RDTReceiver.is_corrupted(rcv_pkt) or RDTReceiver.is_expected_seq(rcv_pkt, self.sequence):
+        ack = self.sequence
+        if self.is_corrupted(rcv_pkt) or not self.is_expected_seq(rcv_pkt, self.sequence):
             match ack:
                 case '0':
-                    ack = 1
+                    ack = '1'
                 case '1':
-                    ack = 0
+                    ack = '0'
+            reply_pkt = self.make_reply_pkt(ack, ord(str(ack)))
+            print(colors.cblue + f'Receiver is sending: {reply_pkt}' + colors.cend)
+            return reply_pkt
 
-        # deliver the data to the process in the application layer
-        ReceiverProcess.deliver_data(rcv_pkt['data'])
+        else:
+            match self.sequence:
+                case '0':
+                    self.sequence = '1'
+                case '1':
+                    self.sequence = '0'
+            ReceiverProcess.deliver_data(rcv_pkt['data'])
 
-        reply_pkt = RDTReceiver.make_reply_pkt(ack, ord(str(ack)))
-        return reply_pkt
+            reply_pkt = self.make_reply_pkt(ack, ord(str(ack)))
+            print(colors.cblue + f'Receiver is sending: {reply_pkt}' + colors.cend)
+            return reply_pkt
