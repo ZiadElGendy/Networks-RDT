@@ -1,0 +1,149 @@
+<mxfile host="app.diagrams.net" modified="2023-12-01T13:37:57.737Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36" etag="XHpi2Djfbpq7CdhMV589" version="22.1.5" type="google">
+  <diagram name="Page-1" id="zv2LFMWRfgkp87_I-a9y">
+    <mxGraphModel dx="1893" dy="2010" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="XDxEf7RmIKlKeEhJK38n-1" target="XDxEf7RmIKlKeEhJK38n-2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-8" value="rdt_send(self, process_buffer)&lt;br&gt;------------------------------&lt;br&gt;pkt = self.make_pkt(self.sequence, data, checksum)&lt;br&gt;pkt_copy = self.clone_packet(pkt)&lt;br&gt;self.net_srv.udt_send(pkt_copy)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="XDxEf7RmIKlKeEhJK38n-7" vertex="1" connectable="0">
+          <mxGeometry x="-0.0095" y="-2" relative="1" as="geometry">
+            <mxPoint x="2" y="-52" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-1" value="Wait for call 0 from above&lt;br&gt;self.sequence = 0" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+          <mxGeometry x="160" y="130" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="XDxEf7RmIKlKeEhJK38n-2" target="XDxEf7RmIKlKeEhJK38n-4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-12" value="reply = self.net_srv.udt_send(pkt_copy)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;not self.is_corrupted(reply)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;and self.is_expected_seq(reply, self.sequence)&lt;br&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="XDxEf7RmIKlKeEhJK38n-11" vertex="1" connectable="0">
+          <mxGeometry x="-0.2917" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-2" value="Wait for ACK 0" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+          <mxGeometry x="610" y="130" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="XDxEf7RmIKlKeEhJK38n-3" target="XDxEf7RmIKlKeEhJK38n-1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-18" value="reply = self.net_srv.udt_send(pkt_copy)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;not self.is_corrupted(reply)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;and self.is_expected_seq(reply, self.sequence" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="XDxEf7RmIKlKeEhJK38n-17" vertex="1" connectable="0">
+          <mxGeometry x="0.175" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-3" value="Wait for ACK 1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+          <mxGeometry x="160" y="450" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="XDxEf7RmIKlKeEhJK38n-4" target="XDxEf7RmIKlKeEhJK38n-3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-14" value="rdt_send(self, process_buffer)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;------------------------------&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;pkt = self.make_pkt(self.sequence, data, checksum)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;pkt_copy = self.clone_packet(pkt)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;self.net_srv.udt_send(pkt_copy)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="XDxEf7RmIKlKeEhJK38n-13" vertex="1" connectable="0">
+          <mxGeometry x="0.0216" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-4" value="Wait for call 1 from above&lt;br&gt;self.sequence = 1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+          <mxGeometry x="610" y="450" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-5" value="&lt;p style=&quot;line-height:normal&quot; class=&quot;MsoNormal&quot;&gt;&lt;b style=&quot;background-color: rgb(76, 0, 153);&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;&amp;lt;Sender&amp;gt;&lt;/font&gt;&lt;/b&gt;&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="395" y="50" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-6" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="125" y="740" as="sourcePoint" />
+            <mxPoint x="171.71572875253787" y="781.715728752538" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;curved=1;" parent="1" source="XDxEf7RmIKlKeEhJK38n-2" target="XDxEf7RmIKlKeEhJK38n-2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-10" value="reply = self.net_srv.udt_send(pkt_copy)&lt;br&gt;self.is_corrupted(reply)&lt;br&gt;or not self.is_expected_seq(reply, self.sequence)&lt;br&gt;-------------------------------------&lt;br&gt;self.net_srv.udt_send(pkt_copy)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="XDxEf7RmIKlKeEhJK38n-9" vertex="1" connectable="0">
+          <mxGeometry x="-0.1125" y="-6" relative="1" as="geometry">
+            <mxPoint x="49" y="-51" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;curved=1;" parent="1" source="XDxEf7RmIKlKeEhJK38n-3" target="XDxEf7RmIKlKeEhJK38n-3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-16" value="reply = self.net_srv.udt_send(pkt_copy)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;self.is_corrupted(reply)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;or not self.is_expected_seq(reply, self.sequence)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;-------------------------------------&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;self.net_srv.udt_send(pkt_copy)" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="XDxEf7RmIKlKeEhJK38n-15" vertex="1" connectable="0">
+          <mxGeometry x="0.125" y="6" relative="1" as="geometry">
+            <mxPoint x="-140" y="-14" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=1;" parent="1" source="XDxEf7RmIKlKeEhJK38n-19" target="XDxEf7RmIKlKeEhJK38n-20" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="200" y="720" />
+              <mxPoint x="650" y="720" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-31" value="rdt_rcv(self, rcv_pkt)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;not self.is_corrupted(rcv_pkt)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;and self.is_expected_seq(rcv_pkt, self.sequence)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;----------------------------&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;ReceiverProcess.deliver_data(rcv_pkt[&#39;data&#39;])&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;self.make_reply_pkt(ack, checksum)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;return reply_pkt" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="XDxEf7RmIKlKeEhJK38n-30" vertex="1" connectable="0">
+          <mxGeometry x="0.0121" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-19" value="Wait for 0 from below&lt;br&gt;self.sequence = 0" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+          <mxGeometry x="160" y="770" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;curved=1;" parent="1" source="XDxEf7RmIKlKeEhJK38n-20" target="XDxEf7RmIKlKeEhJK38n-19" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="650" y="910" />
+              <mxPoint x="200" y="910" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-33" value="rdt_rcv(self, rcv_pkt)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;not self.is_corrupted(rcv_pkt)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;and self.is_expected_seq(rcv_pkt, self.sequence)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;----------------------------&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;ReceiverProcess.deliver_data(rcv_pkt[&#39;data&#39;])&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;self.make_reply_pkt(ack, checksum)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;return reply_pkt" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="XDxEf7RmIKlKeEhJK38n-32" vertex="1" connectable="0">
+          <mxGeometry x="-0.038" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-20" value="Wait for 1 from below&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;self.sequence = 0" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+          <mxGeometry x="610" y="770" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-21" value="&lt;p style=&quot;line-height:normal&quot; class=&quot;MsoNormal&quot;&gt;&lt;b style=&quot;background-color: rgb(76, 0, 153);&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;&amp;lt;Reciev&lt;/font&gt;&lt;/b&gt;&lt;b style=&quot;background-color: rgb(76, 0, 153);&quot;&gt;&lt;font color=&quot;#ffffff&quot;&gt;er&amp;gt;&lt;/font&gt;&lt;/b&gt;&lt;/p&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="395" y="640" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-22" value="" style="endArrow=classic;html=1;rounded=0;entryX=0;entryY=0;entryDx=0;entryDy=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="130" y="90" as="sourcePoint" />
+            <mxPoint x="177" y="132" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;curved=1;" parent="1" source="XDxEf7RmIKlKeEhJK38n-20" target="XDxEf7RmIKlKeEhJK38n-20" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="678" y="750" />
+              <mxPoint x="760" y="750" />
+              <mxPoint x="760" y="870" />
+              <mxPoint x="678" y="870" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-35" value="rdt_rcv(self, rcv_pkt)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;self.is_corrupted(rcv_pkt)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;or not self.is_expected_seq(rcv_pkt, self.sequence)&lt;br&gt;------------------------------&lt;br&gt;if ack = 0 then ack = 1 else ack = 0&lt;br&gt;self.make_reply_pkt(ack, checksum)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;return reply_pkt" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="XDxEf7RmIKlKeEhJK38n-34" vertex="1" connectable="0">
+          <mxGeometry x="0.0029" y="-1" relative="1" as="geometry">
+            <mxPoint x="141" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;curved=1;" parent="1" source="XDxEf7RmIKlKeEhJK38n-19" target="XDxEf7RmIKlKeEhJK38n-19" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="200" y="870" />
+              <mxPoint x="40" y="870" />
+              <mxPoint x="40" y="810" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XDxEf7RmIKlKeEhJK38n-39" value="rdt_rcv(self, rcv_pkt)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;self.is_corrupted(rcv_pkt)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;or not self.is_expected_seq(rcv_pkt, self.sequence)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;------------------------------&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;if ack = 0 then ack = 1 else ack = 0&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;self.make_reply_pkt(ack, checksum)&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;return reply_pkt" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="XDxEf7RmIKlKeEhJK38n-38" vertex="1" connectable="0">
+          <mxGeometry x="0.1454" y="-3" relative="1" as="geometry">
+            <mxPoint x="27" y="76" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
