@@ -1,6 +1,6 @@
 import colors
 import time
-import multiprocessing.pool
+from multiprocessing import Pool, TimeoutError
 class SenderProcess:
     """ Represent the sender process in the application layer  """
 
@@ -25,7 +25,7 @@ class SenderProcess:
 
 class RDTSender:
     """ Implement the Reliable Data Transfer Protocol V2.2 Sender Side """
-
+    
     def __init__(self, net_srv):
         """ This is a class constructor
             It initialize the RDT sender sequence number  to '0' and the network layer services
@@ -97,42 +97,53 @@ class RDTSender:
         return packet
 
     def rdt_send(self, process_buffer):
+        
         """ Implement the RDT v2.2 for the sender
         :param process_buffer:  a list storing the message the sender process wish to send to the receiver process
         :return: terminate without returning any value
         """
 
         # for every character in the buffer
-        for data in process_buffer:
-            checksum = self.get_checksum(data)
-            pkt = self.make_pkt(self.sequence, data, checksum)
-            print("\n--------------------------------------------\n")
-            print(colors.cgreen + f'Sender is sending: {pkt}' + colors.cend)
+        with Pool(processes=1) as pool:
+            for data in process_buffer:
+                checksum = self.get_checksum(data)
+                pkt = self.make_pkt(self.sequence, data, checksum)
+                print("\n--------------------------------------------\n")
+                print(colors.cgreen + f'Sender is sending: {pkt}' + colors.cend)
 
-            pkt_copy = self.clone_packet(pkt)
+                pkt_copy = self.clone_packet(pkt)
 
-            is_received=False
+                is_received=False
 
-            while(not is_received):
-                try:
-                    with multiprocessing.pool.ThreadPool() as pool:
+                while(not is_received):
+                    try:
                         pkt_copy = self.clone_packet(pkt)
-                        reply= pool.apply_async(self.net_srv.udt_send,frame=pkt_copy).get(timeout=5)
-                except multiprocessing.TimeoutError:
-                    print(colors.cred +'timeout'+ colors.cend)
-                else:
-                    print(colors.cgreen + f'Sender expected seq number: {self.sequence}' + colors.cend)
-                    print(colors.cgreen + f'Sender received: {reply}' + colors.cend)
+                        res = pool.apply_async(self.net_srv.udt_send, (pkt_copy,))
+                        reply = res.get(timeout=10)
+                    except TimeoutError:
+                        print("We lacked patience and got a multiprocessing.TimeoutError")
+                    else:
+                        print(colors.cgreen + f'Sender expected seq number: {self.sequence}' + colors.cend)
+                        print(colors.cgreen + f'Sender received: {reply}' + colors.cend)
 
-                    if self.is_corrupted(reply) or not self.is_expected_seq(reply, self.sequence):
-                        print(colors.cgreen + f'Sender is resending: {pkt}' + colors.cend)
-                        
-                    else: 
-                        is_received= True
-                        match self.sequence:
-                            case '0': self.sequence = '1'
-                            case '1': self.sequence = '0'
-            
-       
-        print(f'Sender Done!')
-        return
+                        if self.is_corrupted(reply) or not self.is_expected_seq(reply, self.sequence):
+                            print(colors.cgreen + f'Sender is resending: {pkt}' + colors.cend)
+                            
+                        else: 
+                            is_received= True
+                            match self.sequence:
+                                case '0': self.sequence = '1'
+                                case '1': self.sequence = '0'
+                    #try:
+                    #    with multiprocessing.pool.ThreadPool() as pool:
+                    #      pkt_copy = self.clone_packet(pkt)
+                    #       reply= pool.apply_async(self.net_srv.udt_send,frame=pkt_copy).get(timeout=5)
+                    #except multiprocessing.TimeoutError:
+                    #    print(colors.cred +'timeout'+ colors.cend)
+                    #pkt_copy = self.clone_packet(pkt)
+                    #self.net_srv.udt_send(pkt_copy).wait(timeout=10)
+                    
+                
+        
+            print(f'Sender Done!')
+            return

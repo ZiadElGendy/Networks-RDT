@@ -1,8 +1,9 @@
 import colors
+
 class ReceiverProcess:
     """ Represent the receiver process in the application layer  """
     __buffer = list()
-
+    #lock keyword
     @staticmethod
     def deliver_data(data):
         """ deliver data from the transport layer RDT receiver to the application layer
@@ -10,6 +11,7 @@ class ReceiverProcess:
         :return: no return value
         """
         ReceiverProcess.__buffer.append(data)
+        print (ReceiverProcess.__buffer)
         return
 
     @staticmethod
@@ -22,7 +24,7 @@ class ReceiverProcess:
 
 class RDTReceiver:
     """" Implement the Reliable Data Transfer Protocol V2.2 Receiver Side """
-
+    
     def __init__(self):
         self.sequence = '0'
 
@@ -65,10 +67,12 @@ class RDTReceiver:
         return reply_pck
 
     def rdt_rcv(self, rcv_pkt):
+        
         """  Implement the RDT v2.2 for the receiver
         :param rcv_pkt: a packet delivered by the network layer 'udt_send()' to the receiver
         :return: the reply packet
         """
+        
         print(colors.cblue + f'Receiver expected seq number: {self.sequence}' + colors.cend)
         print(colors.cblue + f'Receiver received: {rcv_pkt}' + colors.cend)
 
@@ -89,8 +93,10 @@ class RDTReceiver:
                     self.sequence = '1'
                 case '1':
                     self.sequence = '0'
+
             ReceiverProcess.deliver_data(rcv_pkt['data'])
 
             reply_pkt = self.make_reply_pkt(ack, ord(str(ack)))
             print(colors.cblue + f'Receiver is sending: {reply_pkt}' + colors.cend)
             return reply_pkt
+        
