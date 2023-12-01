@@ -1,6 +1,5 @@
 import random
 import time
-import colors
 from receiver import RDTReceiver
 
 """
@@ -72,6 +71,7 @@ class NetworkLayer:
         """
 
         # TODO: You may add ONLY print statements to this function for debugging purpose
+
         self.packet = frame
         s_test = self.__packet_corruption_probability()
 

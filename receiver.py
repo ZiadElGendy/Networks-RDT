@@ -1,4 +1,8 @@
-import colors
+cred = '\033[91m'
+cblue = '\33[34m'
+cgreen = '\33[32m'
+cend = '\033[0m'
+
 class ReceiverProcess:
     """ Represent the receiver process in the application layer  """
     __buffer = list()
@@ -35,7 +39,7 @@ class RDTReceiver:
         if packet['checksum'] == ord(str(packet['data'])):
             return False
         else:
-            print(colors.cred + 'Receiver: Incorrect checksum' + colors.cend)
+            print(cred + 'Receiver: Incorrect checksum' + cend)
             return True
 
     @staticmethod
@@ -48,7 +52,7 @@ class RDTReceiver:
         if rcv_pkt['sequence_number'] == exp_seq:
             return True
         else:
-            print(colors.cred + 'Receiver: Incorrect sequence number' + colors.cend)
+            print(cred + 'Receiver: Incorrect sequence number' + cend)
             return False
 
     @staticmethod
@@ -69,8 +73,8 @@ class RDTReceiver:
         :param rcv_pkt: a packet delivered by the network layer 'udt_send()' to the receiver
         :return: the reply packet
         """
-        print(colors.cblue + f'Receiver expected seq number: {self.sequence}' + colors.cend)
-        print(colors.cblue + f'Receiver received: {rcv_pkt}' + colors.cend)
+        print(cblue + f'Receiver expected seq number: {self.sequence}' + cend)
+        print(cblue + f'Receiver received: {rcv_pkt}' + cend)
 
         ack = self.sequence
         if self.is_corrupted(rcv_pkt) or not self.is_expected_seq(rcv_pkt, self.sequence):
@@ -80,7 +84,7 @@ class RDTReceiver:
                 case '1':
                     ack = '0'
             reply_pkt = self.make_reply_pkt(ack, ord(str(ack)))
-            print(colors.cblue + f'Receiver is sending: {reply_pkt}' + colors.cend)
+            print(cblue + f'Receiver is sending: {reply_pkt}' + cend)
             return reply_pkt
 
         else:
@@ -92,5 +96,5 @@ class RDTReceiver:
             ReceiverProcess.deliver_data(rcv_pkt['data'])
 
             reply_pkt = self.make_reply_pkt(ack, ord(str(ack)))
-            print(colors.cblue + f'Receiver is sending: {reply_pkt}' + colors.cend)
+            print(cblue + f'Receiver is sending: {reply_pkt}' + cend)
             return reply_pkt

@@ -1,4 +1,8 @@
-import colors
+cred = '\033[91m'
+cblue = '\33[34m'
+cgreen = '\33[32m'
+cend = '\033[0m'
+
 class SenderProcess:
     """ Represent the sender process in the application layer  """
 
@@ -63,7 +67,7 @@ class RDTSender:
         if reply['checksum'] == ord(str(reply['ack'])):
             return False
         else:
-            print(colors.cred + 'Sender: Incorrect checksum' + colors.cend)
+            print(cred + 'Sender: Incorrect checksum' + cend)
             return True
 
     @staticmethod
@@ -76,7 +80,7 @@ class RDTSender:
         if reply['ack'] == exp_seq:
             return True
         else:
-            print(colors.cred + 'Sender: Incorrect sequence number' + colors.cend)
+            print(cred + 'Sender: Incorrect sequence number' + cend)
             return False
 
     @staticmethod
@@ -105,19 +109,19 @@ class RDTSender:
             checksum = self.get_checksum(data)
             pkt = self.make_pkt(self.sequence, data, checksum)
             print("\n--------------------------------------------\n")
-            print(colors.cgreen + f'Sender is sending: {pkt}' + colors.cend)
+            print(cgreen + f'Sender is sending: {pkt}' + cend)
 
             pkt_copy = self.clone_packet(pkt)
             reply = self.net_srv.udt_send(pkt_copy)
-            print(colors.cgreen + f'Sender expected seq number: {self.sequence}' + colors.cend)
-            print(colors.cgreen + f'Sender received: {reply}' + colors.cend)
+            print(cgreen + f'Sender expected seq number: {self.sequence}' + cend)
+            print(cgreen + f'Sender received: {reply}' + cend)
 
             while self.is_corrupted(reply) or not self.is_expected_seq(reply, self.sequence):
-                print(colors.cgreen + f'Sender is resending: {pkt}' + colors.cend)
-                print(colors.cgreen + f'Sender expected seq number: {self.sequence}' + colors.cend)
+                print(cgreen + f'Sender is resending: {pkt}' + cend)
+                print(cgreen + f'Sender expected seq number: {self.sequence}' + cend)
                 pkt_copy = self.clone_packet(pkt)
                 reply = self.net_srv.udt_send(pkt_copy)
-                print(colors.cgreen + f'Sender received: {reply}' + colors.cend)
+                print(cgreen + f'Sender received: {reply}' + cend)
 
             match self.sequence:
                 case '0': self.sequence = '1'
