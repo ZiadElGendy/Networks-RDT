@@ -119,7 +119,7 @@ class RDTSender:
                     try:
                         pkt_copy = self.clone_packet(pkt)
                         res = pool.apply_async(self.net_srv.udt_send, (pkt_copy,))
-                        reply = res.get(timeout=10)
+                        reply = res.get(timeout=1)
                     except TimeoutError:
                         print("We lacked patience and got a multiprocessing.TimeoutError")
                     else:
